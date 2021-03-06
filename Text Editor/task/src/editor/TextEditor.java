@@ -2,7 +2,6 @@ package editor;
 
 import editor.component.AppMenu;
 import editor.component.AppToolbar;
-import editor.events.Command;
 import editor.events.MenuEvent;
 
 import javax.swing.*;
@@ -37,7 +36,7 @@ public class TextEditor extends JFrame {
         scrollPane.setPreferredSize(new Dimension(250, 250));
     }
 
-    private final AppToolbar toolbar = new AppToolbar(this::load, this::save);
+    private final AppToolbar toolbar = new AppToolbar(this::processCommand);
 
     public TextEditor() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,6 +62,18 @@ public class TextEditor extends JFrame {
                 return;
             case SAVE:
                 log.info("Save a document");
+                return;
+            case START_SEARCH:
+                log.info("Start search");
+                return;
+            case PREVIOUS:
+                log.info("Previous search");
+                return;
+            case NEXT:
+                log.info("Next search");
+                return;
+            case USE_REGEX:
+                log.info("Use regular expressions");
                 return;
             default:
                 log.info("Unimplemented action occurs");
