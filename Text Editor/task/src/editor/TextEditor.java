@@ -17,25 +17,37 @@ public class TextEditor extends JFrame {
         textArea.setWrapStyleWord(true);
     }
 
-    private final JScrollPane areaScrollPane = new JScrollPane(textArea);
+    private final JScrollPane scrollPane = new JScrollPane(textArea);
 
     {
-        areaScrollPane.setVerticalScrollBarPolicy(
+        scrollPane.setName("ScrollPane");
+        scrollPane.setVerticalScrollBarPolicy(
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        areaScrollPane.setPreferredSize(new Dimension(250, 250));
+        scrollPane.setPreferredSize(new Dimension(250, 250));
     }
 
     private final JTextField fileName = new JTextField(15);
 
     {
+        fileName.setName("FilenameField");
         // fileName.addActionListener(e -> log.info("file name action listener"));
     }
 
     private final JButton loadButton = new JButton("Load");
 
     {
+        loadButton.setName("LoadButton");
         loadButton.addActionListener(action -> {
             textArea.setText("Load from file...");
+        });
+    }
+
+    private final JButton saveButton = new JButton("Save");
+
+    {
+        saveButton.setName("SaveButton");
+        saveButton.addActionListener(action -> {
+            textArea.setText("Save to file...");
         });
     }
 
@@ -44,27 +56,19 @@ public class TextEditor extends JFrame {
     {
         topMenu.setLayout(new FlowLayout());
         topMenu.add(fileName);
+        topMenu.add(saveButton);
         topMenu.add(loadButton);
     }
 
     public TextEditor() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(300, 300);
-        setTitle("The first stage");
-//        add(new JButton("North"), BorderLayout.NORTH);
-//        add(new JButton("South"), BorderLayout.SOUTH);
-//        add(new JButton("West"), BorderLayout.WEST);
-//        add(new JButton("East"), BorderLayout.EAST);
-//        add(new JButton("Center"), BorderLayout.CENTER);
+        setTitle("The second stage");
 
         add(topMenu, BorderLayout.NORTH);
-        add(areaScrollPane, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.CENTER);
 
         setVisible(true);
-//        setLayout(null);
     }
 
-    private void loadText() {
-        textArea.setText("Load from file...");
-    }
 }
