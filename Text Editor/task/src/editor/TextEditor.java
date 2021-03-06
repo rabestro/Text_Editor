@@ -1,6 +1,7 @@
 package editor;
 
 import editor.component.AppMenu;
+import editor.component.AppTextArea;
 import editor.component.Toolbar;
 import editor.service.LoadText;
 import editor.service.SaveText;
@@ -36,12 +37,14 @@ public class TextEditor extends JFrame {
         setSize(600, 300);
         setTitle("The second stage");
 
-        final var toolbar = new Toolbar(textArea::getText, textArea::setText);
-        add(new Toolbar(textArea::getText, textArea::setText), BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
+        final var pane = new AppTextArea();
+        add(pane, BorderLayout.CENTER);
 
-        final var loadText = new LoadText(toolbar::getFile, textArea::setText);
-        final var saveText = new SaveText(toolbar::getFile, textArea::getText);
+        final var toolbar = new Toolbar(pane, pane);
+        add(toolbar, BorderLayout.NORTH);
+
+        final var loadText = new LoadText(toolbar::getFile, pane);
+        final var saveText = new SaveText(toolbar::getFile, pane);
 
         setJMenuBar(new AppMenu(loadText, saveText));
         setVisible(true);
