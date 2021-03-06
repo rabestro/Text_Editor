@@ -74,7 +74,7 @@ public class TextEditor extends JFrame {
     private void saveFile(final ActionEvent actionEvent) {
         try {
             final var filePath = Path.of(fileName.getText());
-            Files.writeString(filePath, textArea.getText(), StandardOpenOption.WRITE);
+            Files.writeString(filePath, textArea.getText(), StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
             log.warning(e::getMessage);
         }
@@ -86,6 +86,7 @@ public class TextEditor extends JFrame {
             textArea.setText(Files.readString(filePath));
             Files.readString(filePath);
         } catch (IOException e) {
+            textArea.setText("");
             log.warning(e::getMessage);
         }
 
