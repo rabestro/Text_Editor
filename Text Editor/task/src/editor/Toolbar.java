@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import static java.nio.file.StandardOpenOption.*;
 
 public class Toolbar extends JPanel implements ActionListener {
-    private static final Logger log = Logger.getLogger(TextEditor.class.getName());
+    private static final Logger log = Logger.getLogger(Toolbar.class.getName());
 
     private final Supplier<String> textSupplier;
     private final Consumer<String> textConsumer;
@@ -37,6 +37,14 @@ public class Toolbar extends JPanel implements ActionListener {
         add(fileName);
         add(loadButton);
         add(saveButton);
+    }
+
+    public String getFileName() {
+        return fileName.getText();
+    }
+
+    public Path getFile() {
+        return Path.of(fileName.getText());
     }
 
     @Override
