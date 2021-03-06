@@ -56,6 +56,10 @@ public class AppMenu extends JMenuBar {
         menuItemNext.addActionListener(getListener(Command.NEXT));
         menuSearch.add(menuItemNext);
 
+        final var menuItemRegex = new JMenuItem("Use regular expressions", KeyEvent.VK_R);
+        menuItemRegex.setName("MenuUseRegExp");
+        menuItemRegex.addActionListener(getListener(Command.USE_REGEX));
+        menuSearch.add(menuItemRegex);
 
     }
 
