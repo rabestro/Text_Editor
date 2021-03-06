@@ -2,6 +2,8 @@ package editor;
 
 import editor.component.AppMenu;
 import editor.component.AppToolbar;
+import editor.events.Command;
+import editor.events.MenuEvent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,8 +49,24 @@ public class TextEditor extends JFrame {
 
         fileChooser.setVisible(false);
 //        add(fileChooser);
-        setJMenuBar(new AppMenu(this::load, this::save));
+        setJMenuBar(new AppMenu(this::processCommand));
         setVisible(true);
+    }
+
+    private void processCommand(final MenuEvent event) {
+        switch (event.getCommand()) {
+            case EXIT:
+                this.dispose();
+                return;
+            case OPEN:
+                log.info("Open a document");
+                return;
+            case SAVE:
+                log.info("Save a document");
+                return;
+            default:
+                log.info("Unimplemented action occurs");
+        }
     }
 
     public void load(final ActionEvent actionEvent) {
