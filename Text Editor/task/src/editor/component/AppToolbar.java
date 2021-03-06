@@ -1,8 +1,8 @@
 package editor.component;
 
 import editor.events.Command;
-import editor.events.MenuEvent;
-import editor.events.MenuListener;
+import editor.events.CommandEvent;
+import editor.events.CommandListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,10 +29,10 @@ public class AppToolbar extends JPanel {
     }
 
 
-    public AppToolbar(final MenuListener listener) {
+    public AppToolbar(final CommandListener listener) {
         final BiConsumer<JButton, Command> setCommand = (button, command) ->
                 button.addActionListener(event ->
-                        listener.menuEventOccurred(new MenuEvent(this, command)));
+                        listener.commandEventOccurred(new CommandEvent(this, command)));
 
         setCommand.accept(openButton, Command.OPEN);
         setCommand.accept(saveButton, Command.SAVE);

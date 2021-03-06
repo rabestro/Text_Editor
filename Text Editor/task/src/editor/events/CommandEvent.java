@@ -2,15 +2,15 @@ package editor.events;
 
 import java.util.EventObject;
 
-public class MenuEvent extends EventObject {
+public class CommandEvent extends EventObject {
 
     private Command command;
 
-    public MenuEvent(Object source) {
+    public CommandEvent(Object source) {
         super(source);
     }
 
-    public MenuEvent(Object source, Command command) {
+    public CommandEvent(Object source, Command command) {
         super(source);
         this.command = command;
     }

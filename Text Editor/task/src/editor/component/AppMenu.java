@@ -1,8 +1,8 @@
 package editor.component;
 
 import editor.events.Command;
-import editor.events.MenuEvent;
-import editor.events.MenuListener;
+import editor.events.CommandEvent;
+import editor.events.CommandListener;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -10,11 +10,11 @@ import java.awt.event.KeyEvent;
 
 public class AppMenu extends JMenuBar {
 
-    private final MenuListener menuListener;
+    private final CommandListener commandListener;
 
-    public AppMenu(final MenuListener listener) {
+    public AppMenu(final CommandListener listener) {
 
-        this.menuListener = listener;
+        this.commandListener = listener;
         final var menuFile = new JMenu("File");
         menuFile.setName("MenuFile");
         menuFile.setMnemonic(KeyEvent.VK_F);
@@ -39,6 +39,6 @@ public class AppMenu extends JMenuBar {
     }
 
     private ActionListener getListener(final Command command) {
-        return a -> menuListener.menuEventOccurred(new MenuEvent(this, command));
+        return a -> commandListener.commandEventOccurred(new CommandEvent(this, command));
     }
 }

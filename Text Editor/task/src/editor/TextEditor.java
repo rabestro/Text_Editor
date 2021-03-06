@@ -2,7 +2,7 @@ package editor;
 
 import editor.component.AppMenu;
 import editor.component.AppToolbar;
-import editor.events.MenuEvent;
+import editor.events.CommandEvent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,7 +52,7 @@ public class TextEditor extends JFrame {
         setVisible(true);
     }
 
-    private void processCommand(final MenuEvent event) {
+    private void processCommand(final CommandEvent event) {
         switch (event.getCommand()) {
             case EXIT:
                 this.dispose();
