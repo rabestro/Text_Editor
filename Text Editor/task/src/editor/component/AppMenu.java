@@ -4,11 +4,11 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-public class Menu extends JMenuBar {
+public class AppMenu extends JMenuBar {
 
     private final JMenu menu = new JMenu("File");
 
-    public Menu(final ActionListener loadText, final ActionListener saveText) {
+    public AppMenu(final ActionListener loadText, final ActionListener saveText) {
         menu.setName("MenuFile");
         menu.setMnemonic(KeyEvent.VK_F);
         add(menu);
