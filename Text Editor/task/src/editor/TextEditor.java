@@ -1,14 +1,16 @@
 package editor;
 
 import editor.component.AppMenu;
-import editor.component.AppTextArea;
-import editor.component.Toolbar;
-import editor.service.LoadText;
-import editor.service.SaveText;
+import editor.component.AppToolbar;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.logging.Logger;
+
+import static java.nio.file.StandardOpenOption.*;
 
 public class TextEditor extends JFrame {
     private static final Logger log = Logger.getLogger(TextEditor.class.getName());
@@ -32,22 +34,35 @@ public class TextEditor extends JFrame {
         scrollPane.setPreferredSize(new Dimension(250, 250));
     }
 
+    private final AppToolbar toolbar = new AppToolbar(this::load, this::save);
+
     public TextEditor() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 300);
-        setTitle("The second stage");
+        setTitle("The text editor");
 
-        final var pane = new AppTextArea();
-        add(pane, BorderLayout.CENTER);
-
-        final var toolbar = new Toolbar(pane, pane);
+        add(scrollPane, BorderLayout.CENTER);
         add(toolbar, BorderLayout.NORTH);
 
-        final var loadText = new LoadText(toolbar::getFile, pane);
-        final var saveText = new SaveText(toolbar::getFile, pane);
-
-        setJMenuBar(new AppMenu(loadText, saveText));
+        setJMenuBar(new AppMenu(this::load, this::save));
         setVisible(true);
     }
 
+    public void load(final ActionEvent actionEvent) {
+        final var filePath = toolbar.getFile();
+        try {
+            textArea.setText(Files.readString(filePath));
+        } catch (IOException e) {
+            log.warning(e::getMessage);
+        }
+    }
+
+    public void save(final ActionEvent actionEvent) {
+        final var filePath = toolbar.getFile();
+        try {
+            Files.writeString(filePath, textArea.getText(), CREATE, WRITE, TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            log.warning(e::getMessage);
+        }
+    }
 }
