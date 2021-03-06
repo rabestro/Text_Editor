@@ -20,8 +20,8 @@ public class AppMenu extends JMenuBar {
         menuFile.setMnemonic(KeyEvent.VK_F);
         add(menuFile);
 
-        final var menuItemOpen = new JMenuItem("Open", KeyEvent.VK_L);
-        menuItemOpen.setName("MenuLoad");
+        final var menuItemOpen = new JMenuItem("Open", KeyEvent.VK_O);
+        menuItemOpen.setName("MenuOpen");
         menuItemOpen.addActionListener(getListener(Command.OPEN));
 
         final var menuItemSave = new JMenuItem("Save", KeyEvent.VK_S);
@@ -35,6 +35,27 @@ public class AppMenu extends JMenuBar {
         menuFile.add(menuItemOpen);
         menuFile.add(menuItemSave);
         menuFile.add(menuItemExit);
+
+        final var menuSearch = new JMenu("Search");
+        menuSearch.setName("MenuSearch");
+        menuSearch.setMnemonic(KeyEvent.VK_S);
+        add(menuSearch);
+
+        final var menuItemStart = new JMenuItem("Start search", KeyEvent.VK_S);
+        menuItemStart.setName("MenuStartSearch");
+        menuItemStart.addActionListener(getListener(Command.START_SEARCH));
+        menuSearch.add(menuItemStart);
+
+        final var menuItemPrev = new JMenuItem("Previous match", KeyEvent.VK_P);
+        menuItemPrev.setName("MenuPreviousMatch");
+        menuItemPrev.addActionListener(getListener(Command.PREVIOUS));
+        menuSearch.add(menuItemPrev);
+
+        final var menuItemNext = new JMenuItem("Next match", KeyEvent.VK_N);
+        menuItemNext.setName("MenuNextMatch");
+        menuItemNext.addActionListener(getListener(Command.NEXT));
+        menuSearch.add(menuItemNext);
+
 
     }
 
