@@ -1,5 +1,6 @@
 package editor;
 
+import editor.component.Toolbar;
 import editor.service.LoadText;
 import editor.service.SaveText;
 

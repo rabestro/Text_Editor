@@ -1,4 +1,4 @@
-package editor;
+package editor.component;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,17 +30,13 @@ public class Toolbar extends JPanel implements ActionListener {
         saveButton.addActionListener(this);
     }
 
-    Toolbar(final Supplier<String> textSupplier, final Consumer<String> textConsumer) {
+    public Toolbar(final Supplier<String> textSupplier, final Consumer<String> textConsumer) {
         this.textSupplier = textSupplier;
         this.textConsumer = textConsumer;
         setLayout(new FlowLayout(FlowLayout.LEFT));
         add(fileName);
         add(loadButton);
         add(saveButton);
-    }
-
-    public String getFileName() {
-        return fileName.getText();
     }
 
     public Path getFile() {
