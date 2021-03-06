@@ -2,6 +2,11 @@ package editor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.logging.Logger;
 
 public class TextEditor extends JFrame {
@@ -30,25 +35,20 @@ public class TextEditor extends JFrame {
 
     {
         fileName.setName("FilenameField");
-        // fileName.addActionListener(e -> log.info("file name action listener"));
     }
 
     private final JButton loadButton = new JButton("Load");
 
     {
         loadButton.setName("LoadButton");
-        loadButton.addActionListener(action -> {
-            textArea.setText("Load from file...");
-        });
+        loadButton.addActionListener(this::loadFile);
     }
 
     private final JButton saveButton = new JButton("Save");
 
     {
         saveButton.setName("SaveButton");
-        saveButton.addActionListener(action -> {
-            textArea.setText("Save to file...");
-        });
+        saveButton.addActionListener(this::saveFile);
     }
 
     private final JPanel topMenu = new JPanel();
@@ -62,13 +62,33 @@ public class TextEditor extends JFrame {
 
     public TextEditor() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 300);
+        setSize(600, 300);
         setTitle("The second stage");
 
         add(topMenu, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
 
         setVisible(true);
+    }
+
+    private void saveFile(final ActionEvent actionEvent) {
+        try {
+            final var filePath = Path.of(fileName.getText());
+            Files.writeString(filePath, textArea.getText(), StandardOpenOption.WRITE);
+        } catch (IOException e) {
+            log.warning(e::getMessage);
+        }
+    }
+
+    private void loadFile(final ActionEvent actionEvent) {
+        try {
+            final var filePath = Path.of(fileName.getText());
+            textArea.setText(Files.readString(filePath));
+            Files.readString(filePath);
+        } catch (IOException e) {
+            log.warning(e::getMessage);
+        }
+
     }
 
 }
