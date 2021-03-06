@@ -45,7 +45,7 @@ public class TextEditor extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
         add(toolbar, BorderLayout.NORTH);
 
-//        fileChooser.setVisible(false);
+        fileChooser.setVisible(false);
 //        add(fileChooser);
         setJMenuBar(new AppMenu(this::load, this::save));
         setVisible(true);
