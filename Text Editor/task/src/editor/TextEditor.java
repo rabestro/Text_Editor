@@ -53,6 +53,7 @@ public class TextEditor extends JFrame {
         try {
             textArea.setText(Files.readString(filePath));
         } catch (IOException e) {
+            textArea.setText("");
             log.warning(e::getMessage);
         }
     }
