@@ -6,7 +6,6 @@ import editor.events.CommandEvent;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.logging.Logger;
@@ -59,18 +58,29 @@ public class TextEditor extends JFrame {
                 return;
             case OPEN:
                 log.info("Open a document");
+                try {
+                    textArea.setText(Files.readString(toolbar.getFile()));
+                } catch (IOException e) {
+                    textArea.setText("");
+                    log.warning(e::getMessage);
+                }
                 return;
             case SAVE:
                 log.info("Save a document");
+                try {
+                    Files.writeString(toolbar.getFile(), textArea.getText(), CREATE, WRITE, TRUNCATE_EXISTING);
+                } catch (IOException e) {
+                    log.warning(e::getMessage);
+                }
                 return;
             case START_SEARCH:
                 log.info("Start search");
                 return;
             case PREVIOUS:
-                log.info("Previous search");
+                log.info("Previous match");
                 return;
             case NEXT:
-                log.info("Next search");
+                log.info("Next match");
                 return;
             case USE_REGEX:
                 log.info("Use regular expressions");
@@ -80,22 +90,4 @@ public class TextEditor extends JFrame {
         }
     }
 
-    public void load(final ActionEvent actionEvent) {
-        final var filePath = toolbar.getFile();
-        try {
-            textArea.setText(Files.readString(filePath));
-        } catch (IOException e) {
-            textArea.setText("");
-            log.warning(e::getMessage);
-        }
-    }
-
-    public void save(final ActionEvent actionEvent) {
-        final var filePath = toolbar.getFile();
-        try {
-            Files.writeString(filePath, textArea.getText(), CREATE, WRITE, TRUNCATE_EXISTING);
-        } catch (IOException e) {
-            log.warning(e::getMessage);
-        }
-    }
 }
