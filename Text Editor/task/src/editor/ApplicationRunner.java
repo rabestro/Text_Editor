@@ -1,9 +1,9 @@
 package editor;
 
-import javax.swing.*;
+import static javax.swing.SwingUtilities.invokeLater;
 
 public class ApplicationRunner {
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(TextEditor::new);
+        invokeLater(TextEditor::new);
     }
 }
