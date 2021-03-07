@@ -6,55 +6,43 @@ import editor.events.CommandListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.nio.file.Path;
 import java.util.function.BiConsumer;
 import java.util.logging.Logger;
 
 public class AppToolbar extends JPanel {
     private static final Logger log = Logger.getLogger(AppToolbar.class.getName());
 
-    //    private final MenuListener menuListener;
-//    private final JTextField fileName = new JTextField(15);
-    private final JButton openButton = createButton("OpenButton", "Open16.gif");
-    private final JButton saveButton = createButton("SaveButton", "Save16.gif");
-    private final JButton searchButton = createButton("StartSearchButton", "Search16.gif");
-    private final JButton previousButton = createButton("PreviousMatchButton", "Back16.gif");
-    private final JButton nextButton = createButton("NextMatchButton", "Forward16.gif");
     private final JTextField searchText = new JTextField(15);
     private final JCheckBox useRegex = new JCheckBox("Use regex");
 
     {
-//        fileName.setName("FilenameField");
         searchText.setName("SearchField");
         useRegex.setName("UseRegExCheckbox");
     }
 
 
     public AppToolbar(final CommandListener listener) {
-        final BiConsumer<JButton, Command> setCommand = (button, command) ->
-                button.addActionListener(event ->
-                        listener.commandEventOccurred(new CommandEvent(this, command)));
+        final var openButton = createButton("OpenButton", "Open16.gif");
+        final var saveButton = createButton("SaveButton", "Save16.gif");
+        final var searchButton = createButton("StartSearchButton", "Search16.gif");
+        final var previousButton = createButton("PreviousMatchButton", "Back16.gif");
+        final var nextButton = createButton("NextMatchButton", "Forward16.gif");
 
-        setCommand.accept(openButton, Command.OPEN);
-        setCommand.accept(saveButton, Command.SAVE);
-        setCommand.accept(searchButton, Command.START_SEARCH);
-        setCommand.accept(previousButton, Command.PREVIOUS);
-        setCommand.accept(nextButton, Command.NEXT);
+        final BiConsumer<JButton, Command> addButton = (button, command) -> {
+            button.addActionListener(event ->
+                    listener.commandEventOccurred(new CommandEvent(this, command)));
+            add(button);
+        };
 
         setLayout(new FlowLayout(FlowLayout.LEFT));
-//        add(fileName);
-        add(openButton);
-        add(saveButton);
+        addButton.accept(openButton, Command.OPEN);
+        addButton.accept(saveButton, Command.SAVE);
         add(searchText);
-        add(searchButton);
-        add(previousButton);
-        add(nextButton);
+        addButton.accept(searchButton, Command.START_SEARCH);
+        addButton.accept(previousButton, Command.PREVIOUS);
+        addButton.accept(nextButton, Command.NEXT);
         add(useRegex);
     }
-
-//    public Path getFile() {
-//        return Path.of(fileName.getText());
-//    }
 
     private JButton createButton(final String name, final String path) {
 //        final var url = getClass().getResource(path);
