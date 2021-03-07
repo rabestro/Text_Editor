@@ -3,11 +3,14 @@ package editor.service;
 import javax.swing.JTextArea;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class SearchService {
+    private static final Logger log = Logger.getLogger(SearchService.class.getName());
+
     private final JTextArea textArea;
     private List<MatchResult> matchResultList;
     private int index;
@@ -22,6 +25,7 @@ public class SearchService {
     }
 
     public void startSearch(final Pattern pattern) {
+        log.info("Start search");
         final var matcher = pattern.matcher(textArea.getText());
         matchResultList = matcher.results().collect(Collectors.toUnmodifiableList());
         index = 0;
@@ -29,6 +33,7 @@ public class SearchService {
     }
 
     public void next() {
+        log.info("Next match");
         if (matchResultList.isEmpty()) {
             return;
         }
@@ -39,6 +44,7 @@ public class SearchService {
     }
 
     public void previous() {
+        log.info("Previous match");
         if (matchResultList.isEmpty()) {
             return;
         }
