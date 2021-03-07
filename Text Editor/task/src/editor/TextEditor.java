@@ -114,7 +114,9 @@ public class TextEditor extends JFrame {
                     return;
                 }
                 final var result = matchResultList.get(0);
-                //
+                textArea.setCaretPosition(result.end());
+                textArea.select(result.start(), result.end());
+                textArea.grabFocus();
                 return;
             case PREVIOUS:
                 log.info("Previous match");
