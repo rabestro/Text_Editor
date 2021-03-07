@@ -3,6 +3,7 @@ package editor;
 import editor.component.AppMenu;
 import editor.component.AppToolbar;
 import editor.events.CommandEvent;
+import editor.service.SearchService;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -17,10 +18,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.MatchResult;
-import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.*;
 
@@ -31,6 +30,7 @@ public class TextEditor extends JFrame {
     private List<MatchResult> matchResultList = Collections.emptyList();
     private final JFileChooser jfc;
     private final JTextArea textArea = new JTextArea();
+    private final SearchService searchService = new SearchService(textArea);
     private final AppToolbar toolbar = new AppToolbar(this::processCommand);
     {
         jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -106,17 +106,7 @@ public class TextEditor extends JFrame {
                 return;
             case START_SEARCH:
                 log.info("Start search");
-                final var pattern = toolbar.getPattern();
-                final var matcher = pattern.matcher(textArea.getText());
-                matchResultList = matcher.results().collect(Collectors.toUnmodifiableList());
-                log.log(Level.INFO, "Found matches: {0}", matchResultList.size());
-                if (matchResultList.size() == 0) {
-                    return;
-                }
-                final var result = matchResultList.get(0);
-                textArea.setCaretPosition(result.end());
-                textArea.select(result.start(), result.end());
-                textArea.grabFocus();
+                searchService.startSearch(toolbar.getPattern());
                 return;
             case PREVIOUS:
                 log.info("Previous match");
