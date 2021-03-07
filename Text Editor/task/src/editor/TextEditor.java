@@ -112,6 +112,7 @@ public class TextEditor extends JFrame {
                 return;
             case USE_REGEX:
                 log.info("Use regular expressions");
+                toolbar.useRegex();
                 return;
             default:
                 log.info("Unimplemented action occurs");

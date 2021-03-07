@@ -63,4 +63,8 @@ public class AppToolbar extends JPanel {
     public Pattern getPattern() {
         return Pattern.compile(textPattern.getText(), useRegex.isSelected() ? 0 : Pattern.LITERAL);
     }
+
+    public void useRegex() {
+        useRegex.setSelected(!useRegex.isSelected());
+    }
 }

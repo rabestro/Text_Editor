@@ -49,12 +49,10 @@ public class SearchService {
     }
 
     private void selectText(final int index) {
-        selectText(matchResultList.get(index));
-    }
-
-    private void selectText(final MatchResult result) {
+        final var result = matchResultList.get(index);
         textArea.setCaretPosition(result.end());
         textArea.select(result.start(), result.end());
         textArea.grabFocus();
     }
+
 }
