@@ -106,6 +106,7 @@ public class TextEditor extends JFrame {
                 return;
             case PREVIOUS:
                 log.info("Previous match");
+                searchService.previous();
                 return;
             case NEXT:
                 log.info("Next match");

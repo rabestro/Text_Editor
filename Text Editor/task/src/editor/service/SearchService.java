@@ -36,14 +36,20 @@ public class SearchService {
         if (!iterator.hasNext()) {
             iterator = matchResultList.listIterator();
         }
-        final var result = iterator.next();
-        textArea.setCaretPosition(result.end());
-        textArea.select(result.start(), result.end());
-        textArea.grabFocus();
+        selectText(iterator.next());
     }
 
-    private void selectText(final int index) {
-        final var result = matchResultList.get(index);
+    public void previous() {
+        if (matchResultList.isEmpty()) {
+            return;
+        }
+        if (!iterator.hasPrevious()) {
+            iterator = matchResultList.listIterator(matchResultList.size());
+        }
+        selectText(iterator.previous());
+    }
+
+    private void selectText(final MatchResult result) {
         textArea.setCaretPosition(result.end());
         textArea.select(result.start(), result.end());
         textArea.grabFocus();
