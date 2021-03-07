@@ -5,7 +5,8 @@ import editor.events.CommandEvent;
 import editor.events.CommandListener;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.FlowLayout;
+import java.awt.Insets;
 import java.util.function.BiConsumer;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -22,11 +23,11 @@ public class AppToolbar extends JPanel {
     }
 
     public AppToolbar(final CommandListener listener) {
-        final var openButton = createButton("OpenButton", "Open16.gif");
-        final var saveButton = createButton("SaveButton", "Save16.gif");
-        final var searchButton = createButton("StartSearchButton", "Search16.gif");
-        final var previousButton = createButton("PreviousMatchButton", "Back16.gif");
-        final var nextButton = createButton("NextMatchButton", "Forward16.gif");
+        final var openButton = createButton("OpenButton", "OpenButton.gif");
+        final var saveButton = createButton("SaveButton", "SaveButton.gif");
+        final var searchButton = createButton("StartSearchButton", "StartSearchButton.gif");
+        final var previousButton = createButton("PreviousMatchButton", "PreviousMatchButton.gif");
+        final var nextButton = createButton("NextMatchButton", "NextMatchButton.gif");
 
         final BiConsumer<JButton, Command> addButton = (button, command) -> {
             button.addActionListener(event ->
@@ -45,8 +46,6 @@ public class AppToolbar extends JPanel {
     }
 
     private JButton createButton(final String name, final String path) {
-//        final var url = getClass().getResource(path);
-        // Text Editor/task/
         final var url = "src/editor/images/" + path;
         final var button = new JButton();
         button.setName(name);
@@ -65,6 +64,7 @@ public class AppToolbar extends JPanel {
     }
 
     public void useRegex() {
+        log.info("Use regular expressions");
         useRegex.setSelected(!useRegex.isSelected());
     }
 }
