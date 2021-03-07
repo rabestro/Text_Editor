@@ -7,6 +7,7 @@ import editor.events.CommandListener;
 import javax.swing.*;
 import java.awt.FlowLayout;
 import java.awt.Insets;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -23,11 +24,11 @@ public class AppToolbar extends JPanel {
     }
 
     public AppToolbar(final CommandListener listener) {
-        final var openButton = createButton("OpenButton", "OpenButton.gif");
-        final var saveButton = createButton("SaveButton", "SaveButton.gif");
-        final var searchButton = createButton("StartSearchButton", "StartSearchButton.gif");
-        final var previousButton = createButton("PreviousMatchButton", "PreviousMatchButton.gif");
-        final var nextButton = createButton("NextMatchButton", "NextMatchButton.gif");
+        final var openButton = addButton("OpenButton");
+        final var saveButton = addButton("SaveButton");
+        final var searchButton = addButton("StartSearchButton");
+        final var previousButton = addButton("PreviousMatchButton");
+        final var nextButton = addButton("NextMatchButton");
 
         final BiConsumer<JButton, Command> addButton = (button, command) -> {
             button.addActionListener(event ->
@@ -45,17 +46,14 @@ public class AppToolbar extends JPanel {
         add(useRegex);
     }
 
-    private JButton createButton(final String name, final String path) {
-        final var url = "src/editor/images/" + path;
+    private JButton addButton(final String name) {
+        Objects.requireNonNull(name);
+        // The working directory should be set properly to load icons...
+        final var url = "src/editor/images/" + name + ".gif";
         final var button = new JButton();
-        button.setName(name);
+//        button.setName(name);
         button.setMargin(new Insets(0, 0, 0, 0));
-        if (url == null) {
-            log.severe("Unable to load image: " + path);
-            button.setText(name);
-        } else {
-            button.setIcon(new ImageIcon(url, name));
-        }
+        button.setIcon(new ImageIcon(url, name));
         return button;
     }
 
