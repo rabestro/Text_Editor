@@ -13,6 +13,10 @@ public class SearchService {
 
     public SearchService(final JTextArea textArea) {
         this.textArea = textArea;
+        reset();
+    }
+
+    public void reset() {
         matchResultList = Collections.emptyList();
     }
 
@@ -25,6 +29,7 @@ public class SearchService {
         }
         return found;
     }
+
     private void selectText(final int index) {
         final var result = matchResultList.get(index);
         textArea.setCaretPosition(result.end());

@@ -16,10 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collections;
-import java.util.List;
 import java.util.logging.Logger;
-import java.util.regex.MatchResult;
 
 import static java.nio.file.StandardOpenOption.*;
 
@@ -27,7 +24,6 @@ public class TextEditor extends JFrame {
     private static final Logger log = Logger.getLogger(TextEditor.class.getName());
 
 //    private final AppTextArea appTextArea = new AppTextArea(new JTextArea());
-    private List<MatchResult> matchResultList = Collections.emptyList();
     private final JFileChooser jfc;
     private final JTextArea textArea = new JTextArea();
     private final SearchService searchService = new SearchService(textArea);
@@ -88,7 +84,7 @@ public class TextEditor extends JFrame {
                     textArea.setText("");
                     log.warning(e::getMessage);
                 }
-                matchResultList = Collections.emptyList();
+                searchService.reset();
                 return;
             case SAVE:
                 log.info("Save a document");
