@@ -1,6 +1,7 @@
 package editor;
 
 import editor.component.AppMenu;
+import editor.component.AppTextArea;
 import editor.component.AppToolbar;
 import editor.events.CommandEvent;
 
@@ -11,16 +12,22 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collections;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.MatchResult;
+import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.*;
 
 public class TextEditor extends JFrame {
     private static final Logger log = Logger.getLogger(TextEditor.class.getName());
 
+//    private final AppTextArea appTextArea = new AppTextArea(new JTextArea());
+    private java.util.List<MatchResult> matchResultList = Collections.emptyList();
     private final JFileChooser jfc;
     private final JTextArea textArea = new JTextArea();
-
+    private final AppToolbar toolbar = new AppToolbar(this::processCommand);
     {
         jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         jfc.setName("FileChooser");
@@ -34,7 +41,6 @@ public class TextEditor extends JFrame {
 
     }
 
-    private final AppToolbar toolbar = new AppToolbar(this::processCommand);
 
     public TextEditor() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,6 +51,7 @@ public class TextEditor extends JFrame {
         scrollPane.setName("ScrollPane");
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setPreferredSize(new Dimension(250, 250));
+        add(scrollPane, BorderLayout.CENTER);
 
         add(scrollPane, BorderLayout.CENTER);
         add(toolbar, BorderLayout.NORTH);
@@ -94,6 +101,11 @@ public class TextEditor extends JFrame {
                 return;
             case START_SEARCH:
                 log.info("Start search");
+                final var pattern = toolbar.getPattern();
+                final var matcher = pattern.matcher(textArea.getText());
+                matchResultList = matcher.results().collect(Collectors.toUnmodifiableList());
+                log.log(Level.INFO, "Found matches: {0}", matchResultList.size());
+
                 return;
             case PREVIOUS:
                 log.info("Previous match");

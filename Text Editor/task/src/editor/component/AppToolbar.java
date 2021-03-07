@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.function.BiConsumer;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class AppToolbar extends JPanel {
     private static final Logger log = Logger.getLogger(AppToolbar.class.getName());
@@ -49,7 +50,7 @@ public class AppToolbar extends JPanel {
         final var url = "src/editor/images/" + path;
         final var button = new JButton();
         button.setName(name);
-        button.setMargin(new Insets(0,0,0,0));
+        button.setMargin(new Insets(0, 0, 0, 0));
         if (url == null) {
             log.severe("Unable to load image: " + path);
             button.setText(name);
@@ -57,5 +58,9 @@ public class AppToolbar extends JPanel {
             button.setIcon(new ImageIcon(url, name));
         }
         return button;
+    }
+
+    public Pattern getPattern() {
+        return Pattern.compile(searchText.getText(), useRegex.isSelected() ? 0 : Pattern.LITERAL);
     }
 }
