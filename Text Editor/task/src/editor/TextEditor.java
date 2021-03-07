@@ -23,7 +23,6 @@ import static java.nio.file.StandardOpenOption.*;
 public class TextEditor extends JFrame {
     private static final Logger log = Logger.getLogger(TextEditor.class.getName());
 
-//    private final AppTextArea appTextArea = new AppTextArea(new JTextArea());
     private final JFileChooser jfc;
     private final JTextArea textArea = new JTextArea();
     private final SearchService searchService = new SearchService(textArea);
@@ -37,7 +36,6 @@ public class TextEditor extends JFrame {
         textArea.setBounds(0, 0, 300, 300);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-//        textArea.setFont(new Font("Serif", Font.TRUETYPE_FONT, 16));
 
     }
 
