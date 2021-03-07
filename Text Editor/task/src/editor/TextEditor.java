@@ -18,20 +18,20 @@ import static java.nio.file.StandardOpenOption.*;
 public class TextEditor extends JFrame {
     private static final Logger log = Logger.getLogger(TextEditor.class.getName());
 
-    private final JFileChooser fileChooser = new JFileChooser();
+    private final JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
     private final JTextArea textArea = new JTextArea();
+    private final JScrollPane scrollPane = new JScrollPane(textArea);
 
     {
+        jfc.setName("FileChooser");
+        this.add(jfc);
+
         textArea.setName("TextArea");
         textArea.setBounds(0, 0, 300, 300);
         textArea.setFont(new Font("Serif", Font.TRUETYPE_FONT, 16));
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-    }
 
-    private final JScrollPane scrollPane = new JScrollPane(textArea);
-
-    {
         scrollPane.setName("ScrollPane");
         scrollPane.setVerticalScrollBarPolicy(
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -48,14 +48,11 @@ public class TextEditor extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
         add(toolbar, BorderLayout.NORTH);
 
-        fileChooser.setVisible(false);
-//        add(fileChooser);
         setJMenuBar(new AppMenu(this::processCommand));
         setVisible(true);
     }
 
     private void processCommand(final CommandEvent event) {
-        final var jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         File selectedFile;
         Path filePath;
 
@@ -65,13 +62,13 @@ public class TextEditor extends JFrame {
                 return;
             case OPEN:
                 log.info("Open a document");
-                int returnValue = jfc.showOpenDialog(null);
+                int returnValue = jfc.showOpenDialog(this);
                 if (returnValue != JFileChooser.APPROVE_OPTION) {
                     return;
                 }
                 selectedFile = jfc.getSelectedFile();
                 log.info(selectedFile.getAbsolutePath());
-                filePath = Path.of(selectedFile.getAbsolutePath());
+                filePath = Path.of(selectedFile.toURI());
 
                 try {
                     textArea.setText(Files.readString(filePath));
@@ -87,7 +84,7 @@ public class TextEditor extends JFrame {
                 }
                 selectedFile = jfc.getSelectedFile();
                 log.info(selectedFile.getAbsolutePath());
-                filePath = Path.of(selectedFile.getAbsolutePath());
+                filePath = Path.of(selectedFile.toURI());
                 try {
                     Files.writeString(filePath, textArea.getText(), CREATE, WRITE, TRUNCATE_EXISTING);
                 } catch (IOException e) {

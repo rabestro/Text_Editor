@@ -58,7 +58,8 @@ public class AppToolbar extends JPanel {
 
     private JButton createButton(final String name, final String path) {
 //        final var url = getClass().getResource(path);
-        final var url = "Text Editor/task/src/editor/images/" + path;
+        // Text Editor/task/
+        final var url = "src/editor/images/" + path;
         final var button = new JButton();
         button.setName(name);
         if (url == null) {
