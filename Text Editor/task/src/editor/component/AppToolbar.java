@@ -20,7 +20,6 @@ public class AppToolbar extends JPanel {
         useRegex.setName("UseRegExCheckbox");
     }
 
-
     public AppToolbar(final CommandListener listener) {
         final var openButton = createButton("OpenButton", "Open16.gif");
         final var saveButton = createButton("SaveButton", "Save16.gif");

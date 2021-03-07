@@ -2,10 +2,8 @@ package editor.component;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
-public class AppTextArea extends JScrollPane implements Supplier<String>, Consumer<String> {
+public class AppTextArea extends JScrollPane {
     private final JTextArea textArea = new JTextArea();
 
     public AppTextArea() {
@@ -21,13 +19,4 @@ public class AppTextArea extends JScrollPane implements Supplier<String>, Consum
         add(textArea);
     }
 
-    @Override
-    public void accept(String s) {
-        textArea.setText(s);
-    }
-
-    @Override
-    public String get() {
-        return textArea.getText();
-    }
 }
