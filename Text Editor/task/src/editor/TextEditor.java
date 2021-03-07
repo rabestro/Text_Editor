@@ -18,17 +18,18 @@ import static java.nio.file.StandardOpenOption.*;
 public class TextEditor extends JFrame {
     private static final Logger log = Logger.getLogger(TextEditor.class.getName());
 
-    private final JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+    private final JFileChooser jfc;
     private final JTextArea textArea = new JTextArea();
     private final JScrollPane scrollPane = new JScrollPane(textArea);
 
     {
+        jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         jfc.setName("FileChooser");
         this.add(jfc);
 
         textArea.setName("TextArea");
         textArea.setBounds(0, 0, 300, 300);
-        textArea.setFont(new Font("Serif", Font.TRUETYPE_FONT, 16));
+//        textArea.setFont(new Font("Serif", Font.TRUETYPE_FONT, 16));
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
 

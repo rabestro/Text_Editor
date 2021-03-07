@@ -15,11 +15,11 @@ public class AppToolbar extends JPanel {
 
     //    private final MenuListener menuListener;
 //    private final JTextField fileName = new JTextField(15);
-    private final JButton openButton = createButton("OpenButton", "Open24.gif");
-    private final JButton saveButton = createButton("SaveButton", "Save24.gif");
-    private final JButton searchButton = createButton("StartSearchButton", "Search24.gif");
-    private final JButton previousButton = createButton("PreviousMatchButton", "Back24.gif");
-    private final JButton nextButton = createButton("NextMatchButton", "Forward24.gif");
+    private final JButton openButton = createButton("OpenButton", "Open16.gif");
+    private final JButton saveButton = createButton("SaveButton", "Save16.gif");
+    private final JButton searchButton = createButton("StartSearchButton", "Search16.gif");
+    private final JButton previousButton = createButton("PreviousMatchButton", "Back16.gif");
+    private final JButton nextButton = createButton("NextMatchButton", "Forward16.gif");
     private final JTextField searchText = new JTextField(15);
     private final JCheckBox useRegex = new JCheckBox("Use regex");
 
@@ -62,6 +62,7 @@ public class AppToolbar extends JPanel {
         final var url = "src/editor/images/" + path;
         final var button = new JButton();
         button.setName(name);
+        button.setMargin(new Insets(0,0,0,0));
         if (url == null) {
             log.severe("Unable to load image: " + path);
             button.setText(name);
