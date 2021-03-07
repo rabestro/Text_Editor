@@ -5,9 +5,12 @@ import editor.component.AppToolbar;
 import editor.events.CommandEvent;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import static java.nio.file.StandardOpenOption.*;
@@ -21,7 +24,7 @@ public class TextEditor extends JFrame {
     {
         textArea.setName("TextArea");
         textArea.setBounds(0, 0, 300, 300);
-        textArea.setFont(new Font("Serif", Font.ITALIC, 24));
+        textArea.setFont(new Font("Serif", Font.TRUETYPE_FONT, 16));
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
     }
@@ -52,14 +55,26 @@ public class TextEditor extends JFrame {
     }
 
     private void processCommand(final CommandEvent event) {
+        final var jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        File selectedFile;
+        Path filePath;
+
         switch (event.getCommand()) {
             case EXIT:
                 this.dispose();
                 return;
             case OPEN:
                 log.info("Open a document");
+                int returnValue = jfc.showOpenDialog(null);
+                if (returnValue != JFileChooser.APPROVE_OPTION) {
+                    return;
+                }
+                selectedFile = jfc.getSelectedFile();
+                log.info(selectedFile.getAbsolutePath());
+                filePath = Path.of(selectedFile.getAbsolutePath());
+
                 try {
-                    textArea.setText(Files.readString(toolbar.getFile()));
+                    textArea.setText(Files.readString(filePath));
                 } catch (IOException e) {
                     textArea.setText("");
                     log.warning(e::getMessage);
@@ -67,8 +82,14 @@ public class TextEditor extends JFrame {
                 return;
             case SAVE:
                 log.info("Save a document");
+                if (jfc.showSaveDialog(this) != JFileChooser.APPROVE_OPTION) {
+                    return;
+                }
+                selectedFile = jfc.getSelectedFile();
+                log.info(selectedFile.getAbsolutePath());
+                filePath = Path.of(selectedFile.getAbsolutePath());
                 try {
-                    Files.writeString(toolbar.getFile(), textArea.getText(), CREATE, WRITE, TRUNCATE_EXISTING);
+                    Files.writeString(filePath, textArea.getText(), CREATE, WRITE, TRUNCATE_EXISTING);
                 } catch (IOException e) {
                     log.warning(e::getMessage);
                 }

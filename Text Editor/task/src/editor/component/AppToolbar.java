@@ -14,7 +14,7 @@ public class AppToolbar extends JPanel {
     private static final Logger log = Logger.getLogger(AppToolbar.class.getName());
 
     //    private final MenuListener menuListener;
-    private final JTextField fileName = new JTextField(15);
+//    private final JTextField fileName = new JTextField(15);
     private final JButton openButton = createButton("OpenButton", "Open24.gif");
     private final JButton saveButton = createButton("SaveButton", "Save24.gif");
     private final JButton searchButton = createButton("StartSearchButton", "Search24.gif");
@@ -24,7 +24,7 @@ public class AppToolbar extends JPanel {
     private final JCheckBox useRegex = new JCheckBox("Use regex");
 
     {
-        fileName.setName("FilenameField");
+//        fileName.setName("FilenameField");
         searchText.setName("SearchField");
         useRegex.setName("UseRegExCheckbox");
     }
@@ -42,7 +42,7 @@ public class AppToolbar extends JPanel {
         setCommand.accept(nextButton, Command.NEXT);
 
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        add(fileName);
+//        add(fileName);
         add(openButton);
         add(saveButton);
         add(searchText);
@@ -52,9 +52,9 @@ public class AppToolbar extends JPanel {
         add(useRegex);
     }
 
-    public Path getFile() {
-        return Path.of(fileName.getText());
-    }
+//    public Path getFile() {
+//        return Path.of(fileName.getText());
+//    }
 
     private JButton createButton(final String name, final String path) {
 //        final var url = getClass().getResource(path);
