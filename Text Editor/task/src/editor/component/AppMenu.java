@@ -34,6 +34,7 @@ public class AppMenu extends JMenuBar {
 
         menuFile.add(menuItemOpen);
         menuFile.add(menuItemSave);
+        menuFile.addSeparator();
         menuFile.add(menuItemExit);
 
         final var menuSearch = new JMenu("Search");
