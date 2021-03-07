@@ -11,7 +11,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -48,12 +47,8 @@ public class TextEditor extends JFrame {
         final JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setName("ScrollPane");
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setPreferredSize(new Dimension(250, 250));
-        add(scrollPane, BorderLayout.CENTER);
-
         add(scrollPane, BorderLayout.CENTER);
         add(toolbar, BorderLayout.NORTH);
-
         setJMenuBar(new AppMenu(this::processCommand));
         setVisible(true);
     }
@@ -68,8 +63,7 @@ public class TextEditor extends JFrame {
                 return;
             case OPEN:
                 log.info("Open a document");
-                int returnValue = jfc.showOpenDialog(this);
-                if (returnValue != JFileChooser.APPROVE_OPTION) {
+                if (jfc.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
                     return;
                 }
                 selectedFile = jfc.getSelectedFile();
