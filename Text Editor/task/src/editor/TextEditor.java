@@ -1,18 +1,22 @@
 package editor;
 
 import editor.component.AppMenu;
-import editor.component.AppTextArea;
 import editor.component.AppToolbar;
 import editor.events.CommandEvent;
 
-import javax.swing.*;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.filechooser.FileSystemView;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.MatchResult;
@@ -24,7 +28,7 @@ public class TextEditor extends JFrame {
     private static final Logger log = Logger.getLogger(TextEditor.class.getName());
 
 //    private final AppTextArea appTextArea = new AppTextArea(new JTextArea());
-    private java.util.List<MatchResult> matchResultList = Collections.emptyList();
+    private List<MatchResult> matchResultList = Collections.emptyList();
     private final JFileChooser jfc;
     private final JTextArea textArea = new JTextArea();
     private final AppToolbar toolbar = new AppToolbar(this::processCommand);
@@ -84,6 +88,7 @@ public class TextEditor extends JFrame {
                     textArea.setText("");
                     log.warning(e::getMessage);
                 }
+                matchResultList = Collections.emptyList();
                 return;
             case SAVE:
                 log.info("Save a document");
@@ -105,7 +110,11 @@ public class TextEditor extends JFrame {
                 final var matcher = pattern.matcher(textArea.getText());
                 matchResultList = matcher.results().collect(Collectors.toUnmodifiableList());
                 log.log(Level.INFO, "Found matches: {0}", matchResultList.size());
-
+                if (matchResultList.size() == 0) {
+                    return;
+                }
+                final var result = matchResultList.get(0);
+                //
                 return;
             case PREVIOUS:
                 log.info("Previous match");

@@ -13,11 +13,11 @@ import java.util.regex.Pattern;
 public class AppToolbar extends JPanel {
     private static final Logger log = Logger.getLogger(AppToolbar.class.getName());
 
-    private final JTextField searchText = new JTextField(15);
+    private final JTextField textPattern = new JTextField(15);
     private final JCheckBox useRegex = new JCheckBox("Use regex");
 
     {
-        searchText.setName("SearchField");
+        textPattern.setName("SearchField");
         useRegex.setName("UseRegExCheckbox");
     }
 
@@ -37,7 +37,7 @@ public class AppToolbar extends JPanel {
         setLayout(new FlowLayout(FlowLayout.LEFT));
         addButton.accept(openButton, Command.OPEN);
         addButton.accept(saveButton, Command.SAVE);
-        add(searchText);
+        add(textPattern);
         addButton.accept(searchButton, Command.START_SEARCH);
         addButton.accept(previousButton, Command.PREVIOUS);
         addButton.accept(nextButton, Command.NEXT);
@@ -61,6 +61,6 @@ public class AppToolbar extends JPanel {
     }
 
     public Pattern getPattern() {
-        return Pattern.compile(searchText.getText(), useRegex.isSelected() ? 0 : Pattern.LITERAL);
+        return Pattern.compile(textPattern.getText(), useRegex.isSelected() ? 0 : Pattern.LITERAL);
     }
 }
