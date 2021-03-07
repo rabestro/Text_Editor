@@ -19,6 +19,7 @@ public class TextEditor extends JFrame {
     private final SearchService searchService = new SearchService(textArea);
     private final FileService fileService = new FileService(textArea);
     private final AppToolbar toolbar = new AppToolbar(this::processCommand);
+
     {
         add(fileService);
         textArea.setName("TextArea");
@@ -27,11 +28,10 @@ public class TextEditor extends JFrame {
         textArea.setWrapStyleWord(true);
     }
 
-
     public TextEditor() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 300);
-        setTitle("The text editor");
+        setSize(500, 300);
+        setTitle("The Text Editor");
 
         final JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setName("ScrollPane");

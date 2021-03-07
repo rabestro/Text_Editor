@@ -28,8 +28,8 @@ public class SearchService {
         log.info("Start search");
         final var matcher = pattern.matcher(textArea.getText());
         matchResultList = matcher.results().collect(Collectors.toUnmodifiableList());
-        index = 0;
-        selectText(index);
+        index = -1;
+        next();
     }
 
     public void next() {
