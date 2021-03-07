@@ -21,11 +21,12 @@ public class AppToolbar extends JPanel {
     private final JButton previousButton = createButton("PreviousMatchButton", "Back24.gif");
     private final JButton nextButton = createButton("NextMatchButton", "Forward24.gif");
     private final JTextField searchText = new JTextField(15);
+    private final JCheckBox useRegex = new JCheckBox("Use regex");
 
     {
         fileName.setName("FilenameField");
         searchText.setName("SearchField");
-
+        useRegex.setName("UseRegExCheckbox");
     }
 
 
@@ -48,6 +49,7 @@ public class AppToolbar extends JPanel {
         add(searchButton);
         add(previousButton);
         add(nextButton);
+        add(useRegex);
     }
 
     public Path getFile() {
