@@ -109,6 +109,7 @@ public class TextEditor extends JFrame {
                 return;
             case NEXT:
                 log.info("Next match");
+                searchService.next();
                 return;
             case USE_REGEX:
                 log.info("Use regular expressions");
