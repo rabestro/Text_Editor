@@ -8,7 +8,7 @@ import editor.service.FileService;
 import editor.service.SearchService;
 
 import javax.swing.JFrame;
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.util.logging.Logger;
 
 public class TextEditor extends JFrame {
@@ -21,13 +21,15 @@ public class TextEditor extends JFrame {
 
     public TextEditor() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(500, 300));
         setSize(500, 300);
+        setLocationRelativeTo(null);
         setTitle("The Text Editor");
 
         add(fileService);
-        add(textPane, BorderLayout.CENTER);
-        add(toolbar, BorderLayout.NORTH);
         setJMenuBar(new AppMenu(this::processCommand));
+        add(toolbar, BorderLayout.NORTH);
+        add(textPane, BorderLayout.CENTER);
         setVisible(true);
     }
 

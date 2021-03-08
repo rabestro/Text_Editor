@@ -14,23 +14,24 @@ import static java.nio.file.StandardOpenOption.*;
 public class FileService extends JFileChooser {
     private static final Logger log = Logger.getLogger(FileService.class.getName());
 
-    private final JFileChooser jfc;
     private final TextPane textPane;
 
     public FileService(final TextPane textPane) {
+        super(FileSystemView.getFileSystemView().getHomeDirectory());
         this.textPane = textPane;
-        jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         setName("FileChooser");
+        setMultiSelectionEnabled(false);
+        setFileSelectionMode(JFileChooser.FILES_ONLY);
     }
 
     public void open() {
-        log.info("Open a document");
-        if (jfc.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+        log.entering(getName(), "open", "Open a document");
+        final int result = showOpenDialog(null);
+        if (result != JFileChooser.APPROVE_OPTION) {
             return;
         }
-        final var selectedFile = jfc.getSelectedFile();
-        log.info(selectedFile.getAbsolutePath());
-        final var filePath = Path.of(selectedFile.toURI());
+        log.info(getSelectedFile().getAbsolutePath());
+        final var filePath = Path.of(getSelectedFile().toURI());
 
         try {
             textPane.setText(Files.readString(filePath));
@@ -42,12 +43,11 @@ public class FileService extends JFileChooser {
 
     public void save() {
         log.info("Save a document");
-        if (jfc.showSaveDialog(this) != JFileChooser.APPROVE_OPTION) {
+        if (showSaveDialog(null) != JFileChooser.APPROVE_OPTION) {
             return;
         }
-        final var selectedFile = jfc.getSelectedFile();
-        log.info(selectedFile.getAbsolutePath());
-        final var filePath = Path.of(selectedFile.toURI());
+        log.info(getSelectedFile().getAbsolutePath());
+        final var filePath = Path.of(getSelectedFile().toURI());
         try {
             Files.writeString(filePath, textPane.getText(), CREATE, WRITE, TRUNCATE_EXISTING);
         } catch (IOException e) {
