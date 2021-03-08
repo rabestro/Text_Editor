@@ -5,8 +5,7 @@ import editor.events.CommandEvent;
 import editor.events.CommandListener;
 
 import javax.swing.*;
-import java.awt.FlowLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;

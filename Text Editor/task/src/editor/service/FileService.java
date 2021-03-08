@@ -2,7 +2,7 @@ package editor.service;
 
 import editor.component.TextPane;
 
-import javax.swing.JFileChooser;
+import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,13 +26,21 @@ public class FileService extends JFileChooser {
 
     public void open() {
         log.entering(getName(), "open", "Open a document");
-        final int result = showOpenDialog(null);
-        if (result != JFileChooser.APPROVE_OPTION) {
-            return;
+        if (showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            openDocument();
         }
-        log.info(getSelectedFile().getAbsolutePath());
-        final var filePath = Path.of(getSelectedFile().toURI());
+    }
 
+    public void save() {
+        log.entering(getName(), "save", "Save a document");
+        if (showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            saveDocument();
+        }
+    }
+
+    private void openDocument() {
+        log.entering(getName(), "openDocument", getSelectedFile().getAbsolutePath());
+        final var filePath = Path.of(getSelectedFile().toURI());
         try {
             textPane.setText(Files.readString(filePath));
         } catch (IOException e) {
@@ -41,12 +49,8 @@ public class FileService extends JFileChooser {
         }
     }
 
-    public void save() {
-        log.info("Save a document");
-        if (showSaveDialog(null) != JFileChooser.APPROVE_OPTION) {
-            return;
-        }
-        log.info(getSelectedFile().getAbsolutePath());
+    private void saveDocument() {
+        log.entering(getName(), "saveDocument", getSelectedFile().getAbsolutePath());
         final var filePath = Path.of(getSelectedFile().toURI());
         try {
             Files.writeString(filePath, textPane.getText(), CREATE, WRITE, TRUNCATE_EXISTING);
@@ -54,5 +58,4 @@ public class FileService extends JFileChooser {
             log.warning(e::getMessage);
         }
     }
-
 }

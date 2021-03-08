@@ -7,7 +7,7 @@ import editor.events.CommandEvent;
 import editor.service.FileService;
 import editor.service.SearchService;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
 import java.util.logging.Logger;
 
@@ -15,9 +15,9 @@ public class TextEditor extends JFrame {
     private static final Logger log = Logger.getLogger(TextEditor.class.getName());
 
     private final TextPane textPane = new TextPane();
-    private final Toolbar toolbar = new Toolbar(this::processCommand);
     private final SearchService searchService = new SearchService(textPane);
     private final FileService fileService = new FileService(textPane);
+    private final Toolbar toolbar = new Toolbar(this::processCommand);
 
     public TextEditor() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

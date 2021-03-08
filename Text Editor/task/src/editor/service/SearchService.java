@@ -26,15 +26,16 @@ public class SearchService {
     }
 
     public void startSearch(final Pattern pattern) {
-        log.info("Start search");
+        log.entering(SearchService.class.getName(), "startSearch", pattern);
         final var matcher = pattern.matcher(textArea.getText());
         matchResultList = matcher.results().collect(Collectors.toUnmodifiableList());
         index = -1;
         next();
+        log.exiting(SearchService.class.getName(), "startSearch", matchResultList.size());
     }
 
     public void next() {
-        log.info("Next match");
+        log.entering(SearchService.class.getName(), "next");
         if (matchResultList.isEmpty()) {
             return;
         }
@@ -42,10 +43,11 @@ public class SearchService {
             index = 0;
         }
         selectText(index);
+        log.exiting(SearchService.class.getName(), "next");
     }
 
     public void previous() {
-        log.info("Previous match");
+        log.entering(SearchService.class.getName(), "previous");
         if (matchResultList.isEmpty()) {
             return;
         }
@@ -53,6 +55,7 @@ public class SearchService {
             index = matchResultList.size() - 1;
         }
         selectText(index);
+        log.exiting(SearchService.class.getName(), "previous");
     }
 
     private void selectText(final int index) {

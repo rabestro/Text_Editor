@@ -1,10 +1,9 @@
 package editor.component;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import java.awt.Insets;
+import java.awt.*;
 
 public class TextPane extends JScrollPane {
 
