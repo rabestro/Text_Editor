@@ -1,6 +1,7 @@
 package editor.service;
 
-import javax.swing.JTextArea;
+import editor.component.TextPane;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
@@ -11,11 +12,11 @@ import java.util.stream.Collectors;
 public class SearchService {
     private static final Logger log = Logger.getLogger(SearchService.class.getName());
 
-    private final JTextArea textArea;
+    private final TextPane textArea;
     private List<MatchResult> matchResultList;
     private int index;
 
-    public SearchService(final JTextArea textArea) {
+    public SearchService(final TextPane textArea) {
         this.textArea = textArea;
         reset();
     }
@@ -56,9 +57,7 @@ public class SearchService {
 
     private void selectText(final int index) {
         final var result = matchResultList.get(index);
-        textArea.setCaretPosition(result.end());
-        textArea.select(result.start(), result.end());
-        textArea.grabFocus();
+        textArea.highlightMatch(result.start(), result.end());
     }
 
 }

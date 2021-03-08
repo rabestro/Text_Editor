@@ -1,7 +1,8 @@
 package editor.service;
 
+import editor.component.TextPane;
+
 import javax.swing.JFileChooser;
-import javax.swing.JTextArea;
 import javax.swing.filechooser.FileSystemView;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,10 +15,10 @@ public class FileService extends JFileChooser {
     private static final Logger log = Logger.getLogger(FileService.class.getName());
 
     private final JFileChooser jfc;
-    private final JTextArea textArea;
+    private final TextPane textPane;
 
-    public FileService(final JTextArea textArea) {
-        this.textArea = textArea;
+    public FileService(final TextPane textPane) {
+        this.textPane = textPane;
         jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         setName("FileChooser");
     }
@@ -32,9 +33,9 @@ public class FileService extends JFileChooser {
         final var filePath = Path.of(selectedFile.toURI());
 
         try {
-            textArea.setText(Files.readString(filePath));
+            textPane.setText(Files.readString(filePath));
         } catch (IOException e) {
-            textArea.setText("");
+            textPane.setText("");
             log.warning(e::getMessage);
         }
     }
@@ -48,7 +49,7 @@ public class FileService extends JFileChooser {
         log.info(selectedFile.getAbsolutePath());
         final var filePath = Path.of(selectedFile.toURI());
         try {
-            Files.writeString(filePath, textArea.getText(), CREATE, WRITE, TRUNCATE_EXISTING);
+            Files.writeString(filePath, textPane.getText(), CREATE, WRITE, TRUNCATE_EXISTING);
         } catch (IOException e) {
             log.warning(e::getMessage);
         }

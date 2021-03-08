@@ -1,42 +1,31 @@
 package editor;
 
 import editor.component.AppMenu;
-import editor.component.AppToolbar;
+import editor.component.TextPane;
+import editor.component.Toolbar;
 import editor.events.CommandEvent;
 import editor.service.FileService;
 import editor.service.SearchService;
 
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import java.awt.BorderLayout;
 import java.util.logging.Logger;
 
 public class TextEditor extends JFrame {
     private static final Logger log = Logger.getLogger(TextEditor.class.getName());
 
-    private final JTextArea textArea = new JTextArea();
-    private final SearchService searchService = new SearchService(textArea);
-    private final FileService fileService = new FileService(textArea);
-    private final AppToolbar toolbar = new AppToolbar(this::processCommand);
-
-    {
-        add(fileService);
-        textArea.setName("TextArea");
-        textArea.setBounds(0, 0, 300, 300);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
-    }
+    private final TextPane textPane = new TextPane();
+    private final Toolbar toolbar = new Toolbar(this::processCommand);
+    private final SearchService searchService = new SearchService(textPane);
+    private final FileService fileService = new FileService(textPane);
 
     public TextEditor() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 300);
         setTitle("The Text Editor");
 
-        final JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setName("ScrollPane");
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        add(scrollPane, BorderLayout.CENTER);
+        add(fileService);
+        add(textPane, BorderLayout.CENTER);
         add(toolbar, BorderLayout.NORTH);
         setJMenuBar(new AppMenu(this::processCommand));
         setVisible(true);
@@ -67,7 +56,7 @@ public class TextEditor extends JFrame {
                 toolbar.useRegex();
                 return;
             default:
-                log.info("Unimplemented action occurs");
+                log.warning("Unimplemented action occurs");
         }
     }
 

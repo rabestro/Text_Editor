@@ -11,14 +11,14 @@ import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-public class AppToolbar extends JPanel {
-    private static final Logger log = Logger.getLogger(AppToolbar.class.getName());
+public class Toolbar extends JPanel {
+    private static final Logger log = Logger.getLogger(Toolbar.class.getName());
 
     private final CommandListener listener;
     private final JTextField textPattern = new JTextField(15);
     private final JCheckBox useRegex = new JCheckBox("Use regex");
 
-    public AppToolbar(final CommandListener listener) {
+    public Toolbar(final CommandListener listener) {
         this.listener = listener;
         textPattern.setName("SearchField");
         useRegex.setName("UseRegExCheckbox");
